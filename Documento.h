@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 
 class Documento{
     public:
@@ -13,7 +14,7 @@ class Documento{
         Documento(std::string arquivo);
 
         //Numero de dados do documento
-        int tamanho();
+        int tamanho() const;
 
         //Quantidade de vezes que uma palavra aparece
         int Aparicoes(std::string texto);
@@ -22,22 +23,25 @@ class Documento{
         bool Pertence(std::string palavra);
 
         //Retorna a ultima palavra do documento
-        std::string UltimPalavra();
+        std::string UltimPalavra() const;
 
         //Remove a ultima palavra do documento
         void RemoUltima();
 
-        //exibe o doc
+        //exibe o documento
         void Exibir();
 
         //Copia os elementos de um documento para outro
-        void operator=(Documento d1);
+        void operator=(Documento const d1);
+
+        //Apaga os elementos de um documento
+        void Apagar();
 
         //Retorna qual arquivo foi retirado o documento
-        std::string Fonte();
+        std::string Fonte() const;
     private:
         //Vector armazenando as palavras do documento
-        std::vector<std::string> dados;
+        std::list<std::string> dados;
         //Numero de palavras do documento
         int palavras;
         

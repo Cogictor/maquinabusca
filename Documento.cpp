@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <list>
 #include <locale>
 
 #include "Documento.h"
@@ -46,29 +47,29 @@ std::string CorrigirString(std::string texto){
     in.close();
  }
 
- int Documento::tamanho(){
+ int Documento::tamanho() const{
     return palavras;
  }
 
  int Documento::Aparicoes(std::string texto){
     int aux = 0;
-    for(int i=0;i<tamanho();i++){
-        if(dados[i]==texto)
+    for(std::list<std::string>::iterator it=dados.begin();it!=dados.end();++it){
+        if(*it==texto)
             aux++;
     }
     return aux;
  }
 
  bool Documento::Pertence(std::string texto){
-    for(int i=0;i<tamanho();i++){
-        if(dados[i]==texto)
+    for(std::list<std::string>::iterator it=dados.begin();it!=dados.end();++it){
+        if(*it==texto)
             return true;
     }
     return false;
  }
 
-std::string Documento::UltimPalavra(){
-    return dados[palavras-1];
+std::string Documento::UltimPalavra() const{
+    return dados.back();
 }
 
 void Documento::RemoUltima(){
@@ -78,19 +79,25 @@ void Documento::RemoUltima(){
 
 void Documento::operator=(Documento d1){
     palavras = d1.palavras;
-    for(int i=0;i<d1.tamanho();i++){
-        dados[i] = d1.dados[i];
+    Apagar();
+    for(std::list<std::string>::iterator it=d1.dados.begin();it!=d1.dados.end();++it){
+        dados.push_back(*it);
     }
 }
 
+void Documento::Apagar(){
+    while(palavras!=0)
+        RemoUltima();
+}
+
 void Documento::Exibir(){
-    for(int i=0;i<tamanho();i++){
-        std::cout << dados[i] << " ";
+    for(std::list<std::string>::iterator it=dados.begin();it!=dados.end();++it){
+        std::cout << *it << " ";
     }
     std::cout << std::endl;
 }
 
-std::string Documento::Fonte(){
+std::string Documento::Fonte() const{
     return arquivo;
 }
 

@@ -11,19 +11,24 @@
 int main(){
     Documento doc1("d1.txt");
     Documento doc2("d2.txt");
-
-    doc1.Exibir();
-    std::cout << std::endl;
-    doc2.Exibir();
-    std::cout << std::endl;
+    Documento doc3("d3.txt");
+    Documento doc4("d4.txt");
+    Documento q("q.txt");
 
 
-    Indice Ind1(doc1);
-    Ind1.Exibir();
-    std::cout << std::endl;
+    Indice Index(doc1);
+    Index.Adicionar(doc2);
+    std::cout << "12" << std::endl;
+    Index.Adicionar(doc3);
+    Index.Adicionar(doc4);
 
-    Ind1.Adicionar(doc2);
-    Ind1.Exibir();
+    double sim1,sim2,sim3,sim4;
+    sim1 = Index.Similaridade(doc1,q);
+    sim2 = Index.Similaridade(doc2,q);
+    sim3 = Index.Similaridade(doc3,q);
+    sim4 = Index.Similaridade(doc4,q);
+
+    std::cout << sim1 << " " << sim2 << " " << sim3 << " " <<sim4 << std::endl;
 
     return 0;
 }

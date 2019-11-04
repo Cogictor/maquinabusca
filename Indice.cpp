@@ -1,16 +1,20 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <cmath>
 
 #include "Indice.h"
 
 Indice::Indice(){
     palavras = 0;
+    docs = 0;
 }
 
 Indice::Indice(Documento d1):Indice(){
+    docs ++;
+    Documentos.push_back(d1);
     Documento copia = d1;
-    std::vector<std::string> Docs;
+    std::list<std::string> Docs;
     Docs.push_back(d1.Fonte());    
     for(int i=0;i<d1.tamanho();i++){
         if(!Pertence(copia.UltimPalavra())){
@@ -22,30 +26,40 @@ Indice::Indice(Documento d1):Indice(){
     }
 }
 
-bool Indice::Pertence(std::string texto){
+bool Indice::Pertence(std::string texto) const{
     if(vocabulario.count(texto)>0)
         return true;
     else
         return false;
 }
 
-int Indice::Elementos(){
+int Indice::Elementos() const{
     return palavras;
 }
 
-std::string Indice::UltimChave(){
-    return Chaves[palavras-1];
+int Indice::NumDoc() const{
+    return docs;
+}
+
+int Indice::Associados(std::string texto){
+    return vocabulario[texto].size();
+}
+
+std::string Indice::UltimChave() const{
+    return Chaves.back();
 }
 
 void Indice::RemoUltim(){
     palavras = palavras-1;
-    vocabulario.erase(Chaves[palavras-1]);
+    vocabulario.erase(Chaves.back());
     Chaves.pop_back();
 }
 
 void Indice::Adicionar(Documento d2){
+    docs++;
+    Documentos.push_back(d2);
     Indice Ind2(d2);
-    std::vector<std::string> Docs;
+    std::list<std::string> Docs;
     Docs.push_back(d2.Fonte());
     int iteracoes = Ind2.Elementos();
     for(int i=0;i<iteracoes;i++){
@@ -61,11 +75,42 @@ void Indice::Adicionar(Documento d2){
 }
 
 void Indice::Exibir(){
-    for(int i=0;i<palavras;i++){
-        std::cout <<"[" << Chaves[i] << "] = [";
-        for(int k=0;k<vocabulario[Chaves[i]].size();k++){
-            std::cout <<vocabulario[Chaves[i]][k] << " ";
+    for(std::list<std::string>::iterator it=Chaves.begin();it!=Chaves.end();++it){
+        std::cout <<"\"" << *it << "\" ={";
+        for(std::list<std::string>::iterator it2=vocabulario[*it].begin();it2!=vocabulario[*it].end();++it2){
+            std::cout << *it2 << " ";
         } 
-        std::cout << "]"<< "   ";
+        std::cout << "};"<< "   ";
     }
+}
+
+double Indice::Importancia(std::string texto){
+    double N = NumDoc(), nx = Associados(texto);
+    if(nx == 0)
+        return 0;
+    std::cout << "Importancia" << texto << " " << N<<" " <<nx<< std::log(N/nx)<< std::endl;
+    return std::log(N/nx);
+}
+
+double Indice::Coordenada(Documento d,std::string texto){
+    int frequencia = d.Aparicoes(texto);
+    double importancia = Importancia(texto);
+    std::cout << "frequqencia"<< frequencia << "Coordenada" << frequencia*importancia <<std::endl;
+    return frequencia*importancia;
+}
+
+double Indice::Similaridade(Documento D,Documento q){
+    double numerador = 0,denominador1 = 0,denominador2 = 0;
+    Documento copia = q;
+    for(int i=0;i<q.tamanho();i++){
+        numerador = numerador + Coordenada(D,copia.UltimPalavra())*Coordenada(q,copia.UltimPalavra());
+        denominador1 = denominador1 + pow(Coordenada(D,copia.UltimPalavra()),2);
+        denominador2 = denominador2 + pow(Coordenada(q,copia.UltimPalavra()),2);
+        copia.RemoUltima();
+    }
+    std::cout << std::endl << numerador << " " << denominador1 << " " << denominador2 << std::endl;
+    double similaridade = numerador/(sqrt(denominador1)*sqrt(denominador2));
+    if(denominador2==0||denominador1==0)
+        return 0;
+    return similaridade;
 }
