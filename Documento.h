@@ -2,7 +2,6 @@
 #define DOCUMENTO_H_
 
 #include <string>
-#include <vector>
 #include <list>
 
 class Documento{
@@ -40,13 +39,15 @@ class Documento{
         //Retorna qual arquivo foi retirado o documento
         std::string Fonte() const;
     private:
-        //Vector armazenando as palavras do documento
+        //lista armazenando as palavras do documento
         std::list<std::string> dados;
         //Numero de palavras do documento
         int palavras;
         
         //Nome do arquivo
         std::string arquivo;
+
+        friend class Teste;
 };
 
 

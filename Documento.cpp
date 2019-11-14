@@ -1,8 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <vector>
-#include <list>
 #include <locale>
 
 #include "Documento.h"

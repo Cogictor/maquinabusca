@@ -9,26 +9,37 @@
 
 
 int main(){
-    Documento doc1("d1.txt");
-    Documento doc2("d2.txt");
-    Documento doc3("d3.txt");
-    Documento doc4("d4.txt");
-    Documento q("q.txt");
+    char continuar;
+    std::string pesquisa;
+    do{
+        std::cout << "Digite a chave de pesquisa:" << std::endl;
+        std::ofstream out;
+        out.open("q.txt");
+        std::getline(std::cin,pesquisa);
+        out << pesquisa;
+        out.close();
 
+        Indice Index("input.txt");
+        Documento q("q.txt");
+        std::list<std::list<std::string>> Ranking;
 
-    Indice Index(doc1);
-    Index.Adicionar(doc2);
-    std::cout << "12" << std::endl;
-    Index.Adicionar(doc3);
-    Index.Adicionar(doc4);
+        Ranking = Index.Ranking(q);
 
-    double sim1,sim2,sim3,sim4;
-    sim1 = Index.Similaridade(doc1,q);
-    sim2 = Index.Similaridade(doc2,q);
-    sim3 = Index.Similaridade(doc3,q);
-    sim4 = Index.Similaridade(doc4,q);
+        std::cout << "\nRANKING :" << std::endl << "\t";
 
-    std::cout << sim1 << " " << sim2 << " " << sim3 << " " <<sim4 << std::endl;
-
+        int size = Ranking.size();
+        for(int i=0;i<size;i++){
+            int tam =Ranking.front().size();
+            for(int j=0;j<tam;j++){
+                std::cout << Ranking.front().front()<<" ";
+                Ranking.front().pop_front();
+            }
+            std::cout << std::endl<< "\t" ;
+            Ranking.pop_front();
+        }
+        std::cout <<"\n" << "Continuar?(S/N)" << std::endl;
+        std::cin >> continuar;
+        std::cin.ignore();
+    }while(continuar!='n'&&continuar !='N');
     return 0;
 }
