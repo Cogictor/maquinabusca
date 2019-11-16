@@ -13,7 +13,8 @@ class Indice{
         //Constroi um indice com as palavras do documento
         Indice(Documento const d1);
 
-        //Constroi um indice invertido a partir dos arquivos presentes no arquivo
+        //Constroi um indice invertido a partir dos arquivos presentes no arquivo cujo nome foi recebido de entrada
+        //PRE-CONDICAO = O arquivo nao deve estar vazio
         Indice(std::string arquivo);
 
         //Retorna se o elemento ja pertence ao indice ou nao
@@ -22,11 +23,13 @@ class Indice{
         //Adiciona elementos de um novo doc ao indice
         void Adicionar(Documento const d2);
 
-        //Retorna a ultima chave do vocabulario
-        std::string UltimChave() const;
-
-        //Remove ultimo elemento do vocabulario
+        //Remove o ultimo elemento das chaves do indice
+        //PRE-CONDICAO = O indice deve possuir ao menos uma palavra
         void RemoUltim();
+
+        //Retorna ultimo elemento das chaves do indice
+        //PRE-CONDICAO = O indice nao deve estar sem palavras
+        std::string UltimChave() const;
 
         //Retorna o numero de palavras do indice
         int Elementos() const;
@@ -34,28 +37,28 @@ class Indice{
         //Retorna o numero de documentos associados ao indice
         int NumDoc() const;
 
-        //Retorna o numero de documentos associasdos aquela palavra
-        //PRE-CONDICAO - A palavra deve estar contida ema ao menos um documento (Deve pertencer ao Indice)
+        //Retorna o numero de documentos associados aquela palavra
         int Associados(std::string texto);
-        
-        //Exibe o Indice
-        void Exibir();
 
-        //Calcula coordenada de uma palavra e documento em um indice
+        //Calcula coordenada de uma palavra e documento presente no indice, em um indice
         double Coordenada(Documento const d,std::string texto);
 
         //Calcula a importancia de uma palavra em um indice
         double Importancia(std::string texto);
 
         //Calcula a similaridade de um documento e uma pesquisa
+        //PRE-CONDICAO = O documento deve estar presente no indice e o documento pesquisa nao deve ser vazio
         double Similaridadedoc(Documento const D,Documento const q);
 
-        //Calcula a similaridade dos documentos que compoem o indice coma a pesquisa, e retorna a similaridadedos documentos.
+        //retorna a similaridade dos documentos com a pesquisa
+        //PRE-CONDICAO = O documento pesquisa nao deve ser vazio
         std::list<double> Similaridade(Documento q);
 
         //Gera um ranking com os nomes dos documentos em ordem decrescente de similaridade
         std::list<std::list<std::string>> Ranking(Documento q);
 
+        //Exibe o Ranking do atual baseado no indice do arquivo
+        void Exibir_Ranking(Documento q);
     private:
         //Quantidade de palavras no vocabulario
         int palavras;
@@ -71,6 +74,8 @@ class Indice{
 
         //Chaves do vocabulario
         std::list<std::string> Chaves;
+
+        friend class Teste;
 };
 
 #endif // INDICE_INVERTIDO_H_

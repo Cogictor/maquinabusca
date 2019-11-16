@@ -19,13 +19,13 @@ Indice::Indice(Documento d1):Indice(){
         if(!Pertence(copia.UltimPalavra())){
             vocabulario.insert(make_pair(copia.UltimPalavra(),Docs));
             palavras++;
-            Chaves.push_back(copia.UltimPalavra());
+            Chaves.push_front(copia.UltimPalavra());
         }
         copia.RemoUltima();
     }
 }
 
-Indice::Indice(std::string arquivo){
+Indice::Indice(std::string arquivo):Indice(){
     std::ifstream in;
     in.open(arquivo);
     std::string texto;
@@ -54,7 +54,10 @@ int Indice::NumDoc() const{
 }
 
 int Indice::Associados(std::string texto){
-    return vocabulario[texto].size();
+    if(Pertence(texto))
+        return vocabulario[texto].size();
+    else 
+        return 0;
 }
 
 std::string Indice::UltimChave() const{
@@ -80,19 +83,9 @@ void Indice::Adicionar(Documento d2){
         }else {
             vocabulario.insert(make_pair(Ind2.UltimChave(),Docs));
             palavras++;
-            Chaves.push_back(Ind2.UltimChave());
+            Chaves.push_front(Ind2.UltimChave());
         }
         Ind2.RemoUltim();
-    }
-}
-
-void Indice::Exibir(){
-    for(std::list<std::string>::iterator it=Chaves.begin();it!=Chaves.end();++it){
-        std::cout <<"\"" << *it << "\" ={";
-        for(std::list<std::string>::iterator it2=vocabulario[*it].begin();it2!=vocabulario[*it].end();++it2){
-            std::cout << *it2 << " ";
-        } 
-        std::cout << "};"<< "   ";
     }
 }
 
@@ -165,4 +158,22 @@ std::list<std::list<std::string>> Indice::Ranking(Documento q){
         }
     }
     return Ranking;
+}
+void Indice::Exibir_Ranking(Documento q){
+    std::list<std::list<std::string>> ranking;
+
+    ranking = Ranking(q);
+
+    std::cout << "\nRANKING :" << std::endl << "\t";
+
+    int size = ranking.size();
+    for(int i=0;i<size;i++){
+        int tam =ranking.front().size();
+        for(int j=0;j<tam;j++){
+            std::cout << ranking.front().front()<<" ";
+            ranking.front().pop_front();
+        }
+        std::cout << std::endl<< "\t" ;
+        ranking.pop_front();
+    }
 }

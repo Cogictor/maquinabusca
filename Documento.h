@@ -19,21 +19,25 @@ class Documento{
         int Aparicoes(std::string texto);
 
         //se a palavra existe no doc
+        //PRE-CONDICAO = O documento nao esta vazio
         bool Pertence(std::string palavra);
 
         //Retorna a ultima palavra do documento
+        //PRE-CONDICAO = O documento nao esta vazio
         std::string UltimPalavra() const;
 
         //Remove a ultima palavra do documento
+        //PRE-CONDICAO = O documento nao esta vazio
         void RemoUltima();
-
-        //exibe o documento
-        void Exibir();
 
         //Copia os elementos de um documento para outro
         void operator=(Documento const d1);
 
+        //Compara dois documentos
+        bool operator==(Documento const d1);
+
         //Apaga os elementos de um documento
+        //PRE-CONDICAO = O documento nao esta vazio
         void Apagar();
 
         //Retorna qual arquivo foi retirado o documento

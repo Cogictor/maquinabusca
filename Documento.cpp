@@ -75,8 +75,9 @@ void Documento::RemoUltima(){
 }
 
 void Documento::operator=(Documento d1){
-    palavras = d1.palavras;
     Apagar();
+    arquivo = d1.arquivo;
+    palavras = d1.palavras;
     for(std::list<std::string>::iterator it=d1.dados.begin();it!=d1.dados.end();++it){
         dados.push_back(*it);
     }
@@ -87,16 +88,18 @@ void Documento::Apagar(){
         RemoUltima();
 }
 
-void Documento::Exibir(){
-    for(std::list<std::string>::iterator it=dados.begin();it!=dados.end();++it){
-        std::cout << *it << " ";
-    }
-    std::cout << std::endl;
-}
-
 std::string Documento::Fonte() const{
     return arquivo;
 }
 
-    //Indice Invertido
-         //adicionar a um dicionario, com os documentos que a possuem
+bool Documento::operator==(Documento d1){
+    if(palavras!=d1.palavras){
+        return false;
+    }else if(arquivo!=d1.arquivo){
+        return false;
+    }else if(dados!=d1.dados){
+        return false;
+    }else{
+        return true;
+    }
+}
