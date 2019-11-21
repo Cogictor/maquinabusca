@@ -93,9 +93,9 @@ std::string Documento::Fonte() const{
 }
 
 bool Documento::operator==(Documento d1){
-    if(palavras!=d1.palavras){
+    if(arquivo!=d1.arquivo){
         return false;
-    }else if(arquivo!=d1.arquivo){
+    }else if(palavras!=d1.palavras){
         return false;
     }else if(dados!=d1.dados){
         return false;

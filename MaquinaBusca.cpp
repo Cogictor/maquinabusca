@@ -20,7 +20,7 @@ int main(){
         out.close();
 
         Documento q("q.txt");
-        Index.Exibir_Ranking(q);
+        Index.Exibir_Ranking(std::cout,q);
         std::cout <<"\n" << "Continuar?(S/N)" << std::endl;
         std::cin >> continuar;
         std::cin.ignore();

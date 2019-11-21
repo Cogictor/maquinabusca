@@ -58,7 +58,7 @@ class Indice{
         std::list<std::list<std::string>> Ranking(Documento q);
 
         //Exibe o Ranking do atual baseado no indice do arquivo
-        void Exibir_Ranking(Documento q);
+        void Exibir_Ranking(std::ostream& out,Documento q);
     private:
         //Quantidade de palavras no vocabulario
         int palavras;

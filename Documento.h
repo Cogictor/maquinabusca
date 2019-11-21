@@ -10,6 +10,7 @@ class Documento{
         Documento();
 
         //Funcao que recebe um arquivo e armazena seu conteudo no documento
+        //PRE-CONDICAO = recebe o nome de um arquivo de texto como parametro
         Documento(std::string arquivo);
 
         //Numero de dados do documento

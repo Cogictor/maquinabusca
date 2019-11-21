@@ -159,21 +159,21 @@ std::list<std::list<std::string>> Indice::Ranking(Documento q){
     }
     return Ranking;
 }
-void Indice::Exibir_Ranking(Documento q){
+void Indice::Exibir_Ranking(std::ostream& out,Documento q){
     std::list<std::list<std::string>> ranking;
 
     ranking = Ranking(q);
 
-    std::cout << "\nRANKING :" << std::endl << "\t";
+    out << "\nRANKING :" << "\n" << "\t";
 
     int size = ranking.size();
     for(int i=0;i<size;i++){
         int tam =ranking.front().size();
         for(int j=0;j<tam;j++){
-            std::cout << ranking.front().front()<<" ";
+            out << ranking.front().front()<<" ";
             ranking.front().pop_front();
         }
-        std::cout << std::endl<< "\t" ;
+        out << "\n" << "\t" ;
         ranking.pop_front();
     }
 }

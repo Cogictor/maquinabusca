@@ -533,4 +533,59 @@ TEST_SUITE("Indice"){
         std::remove("teste3.txt");
         std::remove("teste4.txt");
     }
+
+    TEST_CASE("Exibir_Ranking(ofstream,Documento)"){
+        std::ofstream out;
+        out.open("teste.txt");
+        out << "A B";
+        out.close();
+        Documento q("teste.txt");
+
+        out.open("teste1.txt");
+        out << "A A A B";
+        out.close();
+        Documento d1("teste1.txt");
+        out.open("teste2.txt");
+        out << "A A C";
+        out.close();
+        Documento d2("teste2.txt");
+        out.open("teste3.txt");
+        out << "A A";
+        out.close();
+        Documento d3("teste3.txt");
+        out.open("teste4.txt");
+        out << "B B";
+        out.close();
+        Documento d4("teste4.txt");
+        Indice i1(d1);
+        i1.Adicionar(d2);
+        i1.Adicionar(d3);
+        i1.Adicionar(d4);
+        out.open("saida.txt");
+        i1.Exibir_Ranking(out,q);
+        out.close();
+
+        std::ifstream in;
+        in.open("saida.txt");
+        std::string s;
+        in >> s;
+        CHECK(s == "RANKING");
+        in >> s;
+        CHECK(s == ":");
+        in >> s;
+        CHECK(s == "teste4.txt");
+        in >> s;
+        CHECK(s == "teste1.txt");
+        in >> s;
+        CHECK(s == "teste2.txt");
+        in >> s;
+        CHECK(s == "teste3.txt");
+
+        std::remove("saida.txt");
+        std::remove("teste.txt");
+        std::remove("teste1.txt");
+        std::remove("teste2.txt");
+        std::remove("teste3.txt");
+        std::remove("teste4.txt");
+    }
 }
