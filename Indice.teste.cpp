@@ -580,6 +580,7 @@ TEST_SUITE("Indice"){
         CHECK(s == "teste2.txt");
         in >> s;
         CHECK(s == "teste3.txt");
+        in.close();
 
         std::remove("saida.txt");
         std::remove("teste.txt");

@@ -1,6 +1,0 @@
-
-RANKING :
-	teste4.txt 
-	teste1.txt 
-	teste2.txt teste3.txt 
-	
