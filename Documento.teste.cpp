@@ -5,13 +5,13 @@
 
 class Teste {
     public: 
-        static std::list<std::string> valor_dados(Documento d1){
+        static std::list<std::string> valor_dados(const Documento d1){
             return d1.dados;
         }
-        static int valor_palavras(Documento d1){
+        static int valor_palavras(const Documento d1){
             return d1.palavras;
         }
-        static std::string valor_arquivo(Documento d1){
+        static std::string valor_arquivo(const Documento d1){
             return d1.arquivo;
         }
 };

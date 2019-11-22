@@ -5,19 +5,19 @@
 
 class Teste {
     public: 
-        static std::list<std::string> valor_Chaves(Indice i1){
+        static std::list<std::string> valor_Chaves(const Indice i1){
             return i1.Chaves;
         }
-        static int valor_palavras(Indice i1){
+        static int valor_palavras(const Indice i1){
             return i1.palavras;
         }
-        static int valor_docs(Indice i1){
+        static int valor_docs(const Indice i1){
             return i1.docs;
         }
-        static std::list<Documento> valor_Documentos(Indice i1){
+        static std::list<Documento> valor_Documentos(const Indice i1){
             return i1.Documentos;
         }
-        static std::map<std::string,std::list<std::string>> valor_vocabulario(Indice i1){
+        static std::map<std::string,std::list<std::string>> valor_vocabulario(const Indice i1){
             return i1.vocabulario;
         }
 };

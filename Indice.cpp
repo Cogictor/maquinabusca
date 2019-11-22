@@ -116,7 +116,7 @@ double Indice::Similaridadedoc(Documento D,Documento q){
         return 0;
     return similaridade;
 }
-
+ 
 std::list<double> Indice::Similaridade(Documento q){
     std::list<double> sim;
     std::list<Documento> Copia = Documentos;
