@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <locale>
 #include <cstdio>
 
 #include "Documento.h"
@@ -21,10 +20,11 @@ int main(){
 
         Documento q("q.txt");
         Index.Exibir_Ranking(std::cout,q);
+        std::remove("q.txt");
         std::cout <<"\n" << "Continuar?(S/N)" << std::endl;
         std::cin >> continuar;
         std::cin.ignore();
-        std::remove("q.txt");
+        std::system("cls");
     }while(continuar!='n'&&continuar !='N');
     return 0;
 }

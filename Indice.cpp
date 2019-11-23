@@ -31,6 +31,7 @@ Indice::Indice(std::string arquivo):Indice(){
     std::string texto;
 
     while(in >> texto){
+        texto = "docs\\\\" + texto;
         Documento d(texto);
         Adicionar(d);
     }
